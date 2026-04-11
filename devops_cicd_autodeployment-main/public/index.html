@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Auto Deployment with DevOps Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="page-container login-page active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <div class="logo-icon">⚡</div>
+                        <h1>DeployHub</h1>
+                        
+                    </div>
+                    <p>URK23CS1167 MONICK S<==
+                    <p class="subtitle">CI/CD Auto Deployment Platform</p>
+                </div>
+
+                <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            placeholder="Enter username" 
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Enter password" 
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div id="loginError" class="error-message"></div>
+
+                    <button type="submit" class="btn btn-primary btn-login">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p><small>Username: <code>admin</code></small></p>
+                    <p><small>Password: <code>1234</code></small></p>
+                </div>
+            </div>
+
+            <div class="login-info">
+                <div class="info-card">
+                    <div class="info-icon">🚀</div>
+                    <h3>Deploy Instantly</h3>
+                    <p>Push your GitHub repos and deploy in seconds</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔄</div>
+                    <h3>Automate CI/CD</h3>
+                    <p>Continuous integration and deployment made easy</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⚙️</div>
+                    <h3>Full Control</h3>
+                    <p>Manage deployments with a modern interface</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboardPage" class="page-container dashboard-page">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-top">
+                <div class="header-left">
+                    <div class="logo-small">
+                        <span class="logo-icon-small">⚡</span>
+                        <span>DeployHub</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <span id="userName" class="user-name">Admin</span>
+                    <button id="logoutBtn" class="btn btn-secondary btn-logout">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard-content">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <h1 class="welcome-title">Welcome to DeployHub</h1>
+                <p class="welcome-subtitle">Deploy your GitHub repositories with a single click</p>
+            </section>
+
+            <!-- Deployment Card -->
+            <section class="deployment-section">
+                <div class="deployment-card">
+                    <h2>Deploy Application</h2>
+                    <p class="card-subtitle">Enter your GitHub repository URL to start deployment</p>
+
+                    <form id="deployForm" class="deploy-form" onsubmit="handleDeploy(event)">
+                        <div class="form-group">
+                            <label for="repoUrl">GitHub Repository URL</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="url" 
+                                    id="repoUrl" 
+                                    placeholder="https://github.com/username/repository"
+                                    pattern="https?://github\.com/.+/.+"
+                                    required
+                                >
+                                <span class="input-hint">📝 Include .git extension for better compatibility</span>
+                            </div>
+                        </div>
+
+                        <div id="deployError" class="error-message"></div>
+
+                        <div id="deploySuccess" class="success-message"></div>
+
+                        <button 
+                            type="submit" 
+                            id="deployBtn" 
+                            class="btn btn-primary btn-deploy"
+                        >
+                            <span class="btn-icon">🚀</span>
+                            <span class="btn-text">Deploy Now</span>
+                        </button>
+                    </form>
+
+                    <!-- Deployment Status -->
+                    <div id="deploymentStatus" class="deployment-status hidden">
+                        <div class="status-header">
+                            <span id="statusTitle" class="status-title">Deployment in Progress...</span>
+                            <span id="statusIcon" class="status-icon loading">⏳</span>
+                        </div>
+
+                        <div id="deploymentLogs" class="deployment-logs">
+                            <div class="log-entry">
+                                <span class="log-time">00:00</span>
+                                <span class="log-message">Initializing deployment...</span>
+                            </div>
+                        </div>
+
+                        <div id="deploymentUrl" class="deployment-url hidden">
+                            <p>✅ Deployment Successful!</p>
+                            <div class="url-box">
+                                <input 
+                                    type="text" 
+                                    id="liveUrl" 
+                                    readonly
+                                    class="url-input"
+                                >
+                                <button type="button" class="btn btn-small" onclick="copyToClipboard()">
+                                    📋 Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Sections -->
+            <section class="info-sections">
+                <!-- What is CI/CD -->
+                <div class="info-card-large">
+                    <div class="card-header">
+                        <h2>🔄 What is CI/CD?</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Continuous Integration (CI):</strong> Developers merge code changes frequently into a central repository, where automated tests and builds verify the code quality in real-time.</p>
+                        <p><strong>Continuous Deployment (CD):</strong> Automatically deploys tested code to production environments, ensuring rapid and reliable releases.</p>
+                        <div class="benefit-list">
+                            <span class="benefit-tag">✓ Faster Development</span>
+                            <span class="benefit-tag">✓ Better Quality</span>
+                            <span class="benefit-tag">✓ Early Bug Detection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deployment Automation -->
+                <div class="info-card-large">
+                    <div class="card-header">
+                        <h2>⚙️ Deployment Automation</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Automation eliminates manual deployment steps, reducing human error and accelerating time-to-market. With automated pipelines, code changes flow seamlessly from development to production.</p>
+                        <div class="benefit-list">
+                            <span class="benefit-tag">✓ Reduced Manual Work</span>
+                            <span class="benefit-tag">✓ Consistency</span>
+                            <span class="benefit-tag">✓ Faster Releases</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How This Platform Works -->
+            <section class="process-section">
+                <div class="section-header">
+                    <h2>🚀 How This Platform Works</h2>
+                    <p>A streamlined deployment process with DevOps analytics</p>
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" onclick="switchTab('overview', event)">📋 Overview</button>
+                        <button class="tab-btn" onclick="switchTab('dependencies', event)">🔍 Dependencies</button>
+                        <button class="tab-btn" onclick="switchTab('metrics', event)">📊 Metrics</button>
+                        <button class="tab-btn" onclick="switchTab('logs', event)">📝 Logs</button>
+                    </div>
+
+                    <!-- Tab 1: Overview -->
+                    <div id="overview-tab" class="tab-pane active">
+                        <div class="process-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h3>GitHub Repo</h3>
+                                    <p>Provide your repository URL</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h3>Clone Repo</h3>
+                                    <p>Repository is cloned</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h3>Analyze Dependencies</h3>
+                                    <p>Security & health check</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h3>Build & Deploy</h3>
+                                    <p>Docker build & run</p>
+                                </div>
+                            </div>
+                            <div class="step-arrow">→</div>
+                            <div class="step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h3>Live URL</h3>
+                                    <p>Your app is online</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Dependencies Analysis -->
+                    <div id="dependencies-tab" class="tab-pane">
+                        <div class="deps-info">
+                            <h3>🔍 Dependency Analysis</h3>
+                            <p>Automatic security audit and dependency health checking</p>
+
+                            <div class="deps-summary">
+                                <div class="summary-card">
+                                    <span>Total Dependencies</span>
+                                    <div class="summary-value" id="totalDeps">-</div>
+                                </div>
+                                <div class="summary-card">
+                                    <span>Vulnerabilities</span>
+                                    <div class="summary-value critical" id="vulnCount">-</div>
+                                </div>
+                                <div class="summary-card">
+                                    <span>Outdated</span>
+                                    <div class="summary-value warning" id="outdatedCount">-</div>
+                                </div>
+                                <div class="summary-card">
+                                    <span>Unused</span>
+                                    <div class="summary-value info" id="unusedCount">-</div>
+                                </div>
+                                <div class="summary-card">
+                                    <span>Package Manager</span>
+                                    <div class="summary-value" id="packageManager">-</div>
+                                </div>
+                            </div>
+
+                            <!-- Vulnerabilities List -->
+                            <div class="analysis-section">
+                                <h4>🔴 Vulnerabilities</h4>
+                                <div id="vulnerabilitiesList" class="analysis-list">
+                                    <p class="empty-msg">Deploy an app to see results</p>
+                                </div>
+                            </div>
+
+                            <!-- Outdated Packages -->
+                            <div class="analysis-section">
+                                <h4>⚠️ Outdated Packages</h4>
+                                <div id="outdatedList" class="analysis-list">
+                                    <p class="empty-msg">Deploy an app to see results</p>
+                                </div>
+                            </div>
+
+                            <!-- Unused Dependencies -->
+                            <div class="analysis-section">
+                                <h4>📦 Unused Dependencies</h4>
+                                <div id="unusedList" class="analysis-list">
+                                    <p class="empty-msg">Deploy an app to see results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Metrics -->
+                    <div id="metrics-tab" class="tab-pane">
+                        <div class="metrics-info">
+                            <h3>📊 Pipeline Metrics</h3>
+                            <p>Performance tracking and timing analysis</p>
+
+                            <!-- Metrics Cards -->
+                            <div class="metrics-cards">
+                                <div class="metric-card">
+                                    <span class="metric-label">Clone Time</span>
+                                    <div class="metric-value" id="cloneTime">-</div>
+                                    <div class="metric-bar"><div class="metric-fill" id="cloneFill"></div></div>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Build Time</span>
+                                    <div class="metric-value" id="buildTime">-</div>
+                                    <div class="metric-bar"><div class="metric-fill" id="buildFill"></div></div>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Deploy Time</span>
+                                    <div class="metric-value" id="deployTime">-</div>
+                                    <div class="metric-bar"><div class="metric-fill" id="deployFill"></div></div>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Total Time</span>
+                                    <div class="metric-value" id="totalTime">-</div>
+                                    <div class="metric-bar"><div class="metric-fill" id="totalFill"></div></div>
+                                </div>
+                            </div>
+
+                            <!-- Timing Breakdown -->
+                            <div class="analysis-section">
+                                <h4>⏱️ Timing Breakdown</h4>
+                                <div id="breakdownDetails" class="breakdown-table">
+                                    <p class="empty-msg">Deploy an app to see results</p>
+                                </div>
+                            </div>
+
+                            <!-- Pipeline Status -->
+                            <div class="analysis-section">
+                                <h4>Status Report</h4>
+                                <div id="pipelineStatus" class="status-report">
+                                    <p class="empty-msg">Deploy an app to see results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Logs -->
+                    <div id="logs-tab" class="tab-pane">
+                        <div class="logs-info">
+                            <h3>📝 Real-Time Logs</h3>
+                            <p>Live deployment pipeline execution logs</p>
+
+                            <div class="logs-controls">
+                                <button class="btn btn-small" onclick="clearLogs()">🗑️ Clear</button>
+                                <button class="btn btn-small" onclick="downloadLogs()">⬇️ Download</button>
+                            </div>
+
+                            <div id="logsContainer" class="logs-viewer">
+                                <p class="empty-msg">Logs will appear here during deployment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits Section -->
+            <section class="benefits-section">
+                <div class="section-header">
+                    <h2>💡 Platform Benefits</h2>
+                    <p>Why choose automated deployment?</p>
+                </div>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚡</div>
+                        <h3>Lightning Fast</h3>
+                        <p>Deploy your applications in seconds, not hours. Reduce time-to-market significantly.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🤖</div>
+                        <h3>Fully Automated</h3>
+                        <p>Eliminate manual deployment steps. Let our platform handle the heavy lifting.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">✅</div>
+                        <h3>Consistency</h3>
+                        <p>Every deployment follows the same process, ensuring reliable and predictable results.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📈</div>
+                        <h3>Scalability</h3>
+                        <p>Scale your applications effortlessly with Docker containers and modern infrastructure.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔒</div>
+                        <h3>Secure</h3>
+                        <p>Containerized deployments with isolated environments for maximum security.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📊</div>
+                        <h3>Observable</h3>
+                        <p>Real-time logs and monitoring to track deployment progress and troubleshoot issues.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>&copy; 2024 DeployHub. Simplifying CI/CD for everyone.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

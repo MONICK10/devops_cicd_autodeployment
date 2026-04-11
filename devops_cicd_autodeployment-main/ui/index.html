@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDeploy - CI/CD Automation Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="page login-page">
+        <div class="login-container">
+            <!-- Animated Background -->
+            <div class="background-animation">
+                <div class="gradient-blob blob-1"></div>
+                <div class="gradient-blob blob-2"></div>
+            </div>
+
+            <!-- Login Card -->
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">🚀</div>
+                    <h1>AutoDeploy</h1>
+                    <p>CI/CD Automation Platform</p>
+                </div>
+
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            placeholder="Enter username"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Enter password"
+                            required
+                        >
+                    </div>
+
+                    <div id="loginError" class="error-message"></div>
+
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Demo Credentials:</p>
+                    <p><strong>Username:</strong> admin</p>
+                    <p><strong>Password:</strong> 1234</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboardPage" class="page dashboard-page" style="display: none;">
+        <!-- Navigation Header -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-brand">
+                    <span class="logo-icon">🚀</span>
+                    <span class="logo-text">AutoDeploy</span>
+                </div>
+                <div class="user-section">
+                    <span class="username">👤 <span id="displayUsername">Admin</span></span>
+                    <button id="logoutBtn" class="btn btn-secondary btn-small">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1>Deploy Your Applications Instantly</h1>
+                    <p>Simplified CI/CD automation - from GitHub to production in seconds</p>
+                </div>
+            </section>
+
+            <!-- Deploy Section -->
+            <section class="deploy-section">
+                <div class="section-container">
+                    <h2>🚀 Deploy Your Project</h2>
+                    
+                    <div class="deploy-card">
+                        <form id="deployForm" class="deploy-form">
+                            <div class="form-group">
+                                <label for="repoUrl">GitHub Repository URL</label>
+                                <input 
+                                    type="url" 
+                                    id="repoUrl" 
+                                    placeholder="https://github.com/username/repository"
+                                    required
+                                >
+                                <small>Paste your public GitHub repository URL</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-large deploy-btn">
+                                <span class="btn-icon">🚀</span>
+                                <span class="btn-text">Deploy Now</span>
+                                <span class="btn-loader"></span>
+                            </button>
+                        </form>
+
+                        <!-- Status Display -->
+                        <div id="statusContainer" class="status-container" style="display: none;">
+                            <div id="deploymentStatus" class="deployment-status"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Sections -->
+            <section class="info-sections">
+                <!-- What is CI/CD -->
+                <div class="info-card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>What is CI/CD?</h3>
+                    <p><strong>Continuous Integration (CI):</strong> Automatically test code changes as developers commit them.</p>
+                    <p><strong>Continuous Deployment (CD):</strong> Automatically deploy tested code to production.</p>
+                    <p class="benefit">✨ Result: Faster releases with fewer bugs</p>
+                </div>
+
+                <!-- Deployment Automation -->
+                <div class="info-card">
+                    <div class="card-icon">🔄</div>
+                    <h3>Deployment Automation</h3>
+                    <p>Automate the entire process from code to running application:</p>
+                    <ul class="benefit-list">
+                        <li>💾 Clone your repository</li>
+                        <li>📦 Install dependencies</li>
+                        <li>🔨 Build your project</li>
+                        <li>🌐 Deploy and access instantly</li>
+                    </ul>
+                </div>
+
+                <!-- How It Works -->
+                <div class="info-card">
+                    <div class="card-icon">🎯</div>
+                    <h3>How Our Platform Works</h3>
+                    <div class="steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <p>Paste GitHub URL</p>
+                        </div>
+                        <div class="step-arrow">→</div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <p>Clone & Install</p>
+                        </div>
+                        <div class="step-arrow">→</div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <p>Build & Deploy</p>
+                        </div>
+                        <div class="step-arrow">→</div>
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <p>Access Live</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <div class="info-card">
+                    <div class="card-icon">⭐</div>
+                    <h3>Why Use This Platform?</h3>
+                    <ul class="benefit-list">
+                        <li>✅ <strong>Fast Deployment:</strong> Deploy in seconds, not hours</li>
+                        <li>✅ <strong>Manual Work Reduced:</strong> Automate repetitive tasks</li>
+                        <li>✅ <strong>Consistency:</strong> Same process every time</li>
+                        <li>✅ <strong>Scalability:</strong> Deploy unlimited projects</li>
+                        <li>✅ <strong>Easy to Use:</strong> Just paste a URL</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Tech Stack -->
+            <section class="tech-section">
+                <div class="section-container">
+                    <h2>🛠️ Supported Technologies</h2>
+                    <div class="tech-grid">
+                        <div class="tech-badge">React</div>
+                        <div class="tech-badge">Vue</div>
+                        <div class="tech-badge">Angular</div>
+                        <div class="tech-badge">Next.js</div>
+                        <div class="tech-badge">Node.js</div>
+                        <div class="tech-badge">Express</div>
+                        <div class="tech-badge">HTML/CSS</div>
+                        <div class="tech-badge">Vite</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>&copy; 2024 AutoDeploy - Simplifying CI/CD for Everyone</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

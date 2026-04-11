@@ -1,0 +1,27 @@
+{
+  "name": "deployment-platform",
+  "version": "1.0.0",
+  "description": "Simplified deployment platform for Node.js applications",
+  "main": "server.js",
+  "scripts": {
+    "start": "concurrently \"npm run start-simple\" \"npx http-server public -p 3000\"",
+    "dev": "node server.js",
+    "start-simple": "node server-simple.js",
+    "simple": "node server-simple.js"
+  },
+  "keywords": [
+    "deployment",
+    "docker",
+    "github",
+    "devops"
+  ],
+  "author": "DevOps Engineer",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^9.2.1",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
