@@ -4,10 +4,12 @@
   "description": "Simplified deployment platform for Node.js applications",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently \"npm run start-simple\" \"npx http-server public -p 3000\"",
+    "start": "node server.js",
     "dev": "node server.js",
     "start-simple": "node server-simple.js",
-    "simple": "node server-simple.js"
+    "simple": "node server-simple.js",
+    "build": "echo 'Build process completed'",
+    "vercel-build": "echo 'Vercel build completed'"
   },
   "keywords": [
     "deployment",

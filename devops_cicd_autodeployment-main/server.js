@@ -7,12 +7,11 @@ const DependencyAnalyzer = require('./lib/dependency-analyzer');
 const MetricsCollector = require('./lib/metrics-collector');
 
 const app = express();
-const frontendApp = express();
-const BACKEND_PORT = 5000;
-const FRONTEND_PORT = 3000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // CORS Middleware - Allow requests from frontend
 app.use((req, res, next) => {
@@ -34,8 +33,6 @@ app.use((req, res, next) => {
     
     next();
 });
-
-frontendApp.use(express.static(path.join(__dirname, 'public')));
 
 // State tracking
 let currentDeployment = null;
@@ -506,28 +503,22 @@ app.get('/api/health', (req, res) => {
 });
 
 // Serve frontend
-frontendApp.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start backend server
-app.listen(BACKEND_PORT, () => {
+// Start server
+app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════╗
 ║   🚀 Deployment Platform Started       ║
 ╠════════════════════════════════════════╣
-║ Backend API running on port ${BACKEND_PORT}        ║
-║ Frontend running on port ${FRONTEND_PORT}         ║
+║ Server running on port ${PORT}                     ║
 ║                                        ║
-║ 🌐 Frontend: http://localhost:${FRONTEND_PORT}      ║
-║ 🔌 Backend: http://localhost:${BACKEND_PORT}       ║
+║ 🌐 Frontend: http://localhost:${PORT}        ║
+║ 🔌 Backend: http://localhost:${PORT}        ║
 ║                                        ║
 ║ Ready to deploy applications!          ║
 ╚════════════════════════════════════════╝
   `);
-});
-
-// Start frontend server
-frontendApp.listen(FRONTEND_PORT, () => {
-  console.log(`✓ Frontend server listening on port ${FRONTEND_PORT}`);
 });
