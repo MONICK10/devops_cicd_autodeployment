@@ -2,19 +2,6 @@
   "name": "devops-cicd-autodeployment",
   "version": 2,
   "buildCommand": "npm run build",
-  "public": true,
-  "env": [],
-  "regions": ["iad1"],
-  "functions": {
-    "server.js": {
-      "memory": 512,
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/server.js"
-    }
-  ]
+  "installCommand": "npm install",
+  "outputDirectory": "public"
 }
